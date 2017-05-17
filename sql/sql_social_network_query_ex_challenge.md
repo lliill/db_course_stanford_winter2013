@@ -31,10 +31,10 @@ select avg(c) from (select id1, count(id2) c from friend group by id1)
 
 Find the number of students who are either friends with Cassandra or are friends of friends of Cassandra. Do not count Cassandra, even though technically she is a friend of a friend.
 ```sql
-select count(id2) from friend where id1 in (
+select count(distinct id2)+ count(distinct id1)  from friend where id1 in (
   select id2 from friend where id1 in (select id from highschooler where name='Cassandra')
 )
-and id1 not in (select id from highschooler where name='Cassandra')
+and id2 not in (select id from highschooler where name='Cassandra')
 ```
 
 Find the name and grade of the student(s) with the greatest number of friends.
